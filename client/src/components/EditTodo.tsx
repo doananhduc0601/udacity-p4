@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import Auth from '../auth/Auth'
-import { getUploadUrl, uploadFile } from '../api/todos-api'
+import { getUploadUrl, updateImage, uploadFile } from '../api/todos-api'
 
 enum UploadState {
   NoUpload,
@@ -57,6 +57,9 @@ export class EditTodo extends React.PureComponent<
       const uploadUrl = await getUploadUrl(this.props.auth.getIdToken(), this.props.match.params.todoId)
       console.log(uploadUrl)
       this.setUploadState(UploadState.UploadingFile)
+
+      await updateImage(this.props.auth.getIdToken(), this.props.match.params.todoId)
+
       await uploadFile(uploadUrl, this.state.file)
 
       alert('File was uploaded!')

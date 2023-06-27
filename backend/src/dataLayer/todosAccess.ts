@@ -121,9 +121,12 @@ export class TodosAccess {
                     todoId,
                     userId
                 },
-                UpdateExpression: 'set attachmentUrl = : attachmentUrl',
+                UpdateExpression: 'set #attachmentUrl = :attachmentUrl',
+                ExpressionAttributeNames: {
+                    "#attachmentUrl": "attachmentUrl"
+                },
                 ExpressionAttributeValues: {
-                    'attachmentUrl': attachmentUrl
+                    ':attachmentUrl': attachmentUrl
                 }
             })
             .promise()
